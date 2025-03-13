@@ -14,9 +14,14 @@ class ModuleController extends Controller
         'm.id as Module_ID',
         'm.nom_module as Module',
         'f.nom_filiere as Filiere',
+        'f.code_filiere as code_filiere',
         'm.regional',
-        DB::raw("GROUP_CONCAT(DISTINCT g.nom ORDER BY g.nom ASC SEPARATOR ', ') as Groupes"),  // Combine group names
+        DB::raw("GROUP_CONCAT(DISTINCT g.nom ORDER BY g.nom ASC SEPARATOR ', ') as Groupes"),
+          // Combine group names
         'fo.formation_niveau as Niveau',
+        'fo.creneau',
+
+
         'fo.formation_type as Type_de_Formation',
         'fo.mode as Mode',
         DB::raw('SUM(COALESCE(ap.volume_realise, 0) + COALESCE(asunc.volume_realise, 0)) AS MHT_Realisé'), // Total realized
@@ -25,12 +30,12 @@ class ModuleController extends Controller
     ->leftJoin('filieres as f', 'm.filiere_id', '=', 'f.id')
     ->leftJoin('groupes as g', 'g.filiere_id', '=', 'f.id')
     ->leftJoin('formations as fo', 'fo.id', '=', 'f.foramtion_id')
-    ->leftJoin('avancement_presentiels as ap', function ($join) {
+    ->leftJoin('avencement_presentieles as ap', function ($join) {
         $join->on('g.id', '=', 'ap.groupe_id')
              ->on('ap.module_id', '=', 'm.id');
     })
     ->leftJoin('fusions as fus', 'g.fusion_id', '=', 'fus.id')
-    ->leftJoin('avancement_syncs as asunc', function ($join) {
+    ->leftJoin('avencement_syncs as asunc', function ($join) {
         $join->on('m.id', '=', 'asunc.module_id')
              ->on('fus.id', '=', 'asunc.fusion_id');
     })
