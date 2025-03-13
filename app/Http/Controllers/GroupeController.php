@@ -43,6 +43,6 @@ class GroupeController extends Controller
             )
             ->get();
 
-        return view('welcome',['formation'=>$results]);
+        return view('AvancementParGroupe',['formation'=>$results]);
     }
 }

@@ -9,7 +9,7 @@ class FormationController extends Controller
 {
     public function show(){
         $formations=Formation::all();
-        return view('welcome',['formation'=>$formations]);
+        return view('AvancementParGroupe',['formation'=>$formations]);
 
 
 

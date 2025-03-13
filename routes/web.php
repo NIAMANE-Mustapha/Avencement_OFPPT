@@ -2,7 +2,8 @@
 
 use App\Http\Controllers\FormationController;
 use App\Http\Controllers\GroupeController;
+use App\Http\Controllers\ModuleController;
 use Illuminate\Support\Facades\Route;
-use PHPUnit\TextUI\Configuration\GroupCollection;
 
 Route::get('/',[GroupeController::class,'show']);
+Route::get('/AvancementParModule',[ModuleController::class,'getModules']);
