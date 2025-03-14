@@ -6,12 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filiere extends Model
 {
-    use HasFactory;
-
     protected $table = 'filieres';
 
-    public function modules()
+    public function groupes()
     {
-        return $this->hasMany(Module::class, 'filiere_id');
+        return $this->hasMany(Groupe::class, 'filiere_id');
     }
 }

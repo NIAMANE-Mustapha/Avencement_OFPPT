@@ -1,119 +1,109 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Avancement par Module</title>
     <style>
-        /* Style the table container */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-family: Arial, sans-serif;
-    color: #333;
-}
+        /* Style de base pour le tableau */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-family: Arial, sans-serif;
+        }
 
-/* Style table headers */
-th {
-    background-color: #2c3e50;
-    color: white;
-    padding: 12px 15px;
-    text-align: left;
-    font-size: 16px;
-    text-transform: uppercase;
-}
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
 
-/* Style table data cells */
-td {
-    padding: 10px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 14px;
-}
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
 
-/* Hover effect for rows */
-tr:hover {
-    background-color: #f1f1f1;
-}
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
 
-/* Add some spacing between rows */
-tbody tr {
-    transition: background-color 0.3s ease;
-}
+        tr:hover {
+            background-color: #f1f1f1;
+        }
 
-/* Zebra striping for better readability */
-tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-}
+        .title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
 
-/* Style for the first column (Module) */
-td:first-child {
-    font-weight: bold;
-}
+        .percentage {
+            color: #007bff;
+            font-weight: bold;
+        }
 
-/* Style for the last column (Volume Total) */
-td:last-child {
-    font-weight: bold;
-    color: #e74c3c;
-}
+        .negative {
+            color: #dc3545;
+        }
 
-/* Style the table wrapper */
-table-wrapper {
-    overflow-x: auto;
-    max-width: 100%;
-    margin: 20px 0;
-}
-
-/* Make table responsive */
-@media (max-width: 768px) {
-    table {
-        font-size: 12px;
-    }
-
-    th, td {
-        padding: 8px;
-    }
-}
-
+        .positive {
+            color: #28a745;
+        }
     </style>
 </head>
 <body>
+    <div class="title">Avancement par Module</div>
     <table>
         <thead>
             <tr>
                 <th>Niveau</th>
-                <th>Module</th>
-                <th>Code Filiére</th>
+                <th>Secteur</th>
+                <th>Code Filière</th>
                 <th>Filière</th>
+                <th>Type de Formation</th>
                 <th>Créneau</th>
-                <th>Groupes</th>
-                <th>Type</th>
+                <th>Groupe</th>
+                <th>Effectif Groupe</th>
+                <th>Année de Formation</th>
                 <th>Mode</th>
+                <th>Code Module</th>
+                <th>Module</th>
                 <th>Régional</th>
-                <th>Volume Réalisé</th>
-                <th>Volume Total</th>
+                <th>MH Totale</th>
+                <th>MH Réalisée</th>
+                <th>% Réalisation</th>
+                <th>Écart</th>
+                <th>Écart en %</th>
             </tr>
         </thead>
         <tbody>
             @foreach($modules as $module)
-            <tr>
-                <td>{{ $module->Niveau }}</td>
-                <td>{{ $module->Module }}</td>
-                <td>{{ $module->code_filiere }}</td>
-                <td>{{ $module->Filiere }}</td>
-                <td>{{ $module->creneau}}</td>
-                <td>{{ $module->Groupes }}</td>
-                <td>{{ $module->Type_de_Formation }}</td>
-                <td>{{ $module->Mode }}</td>
-                <td>{{ $module->regional}}</td>
-                <td>{{ $module->MHT_Realisé }}</td>
-                <td>{{ $module->MHT }}</td>
-            </tr>
+                <tr>
+                    <td>{{ $module->groupe->filiere->niveau_formation }}</td>
+                    <td>{{ $module->groupe->filiere->secteur }}</td>
+                    <td>{{ $module->groupe->filiere->code_filiere }}</td>
+                    <td>{{ $module->groupe->filiere->nom_filiere }}</td>
+                    <td>{{ $module->groupe->filiere->type_formation }}</td>
+                    <td>{{ $module->groupe->creneau }}</td>
+                    <td>{{ $module->groupe->nom_groupe }}</td>
+                    <td>{{ $module->groupe->effectif_groupe }}</td>
+                    <td>{{ $module->groupe->annee_formation }}</td>
+                    <td>{{ $module->groupe->filiere->mode_formation }}</td>
+                    <td>{{ $module->module->code_module }}</td>
+                    <td>{{ $module->module->nom_module }}</td>
+                    <td>{{ $module->module->regional }}</td>
+                    <td>{{ $module->module->MHT_total }}</td>
+                    <td>{{ $module->total_MHT_realisées }}</td>
+                    <td class="percentage">{{ number_format(($module->total_MHT_realisées / $module->module->MHT_total) * 100, 2) }}%</td>
+                    <td>{{ $module->module->MHT_total - $module->total_MHT_realisées }}</td>
+                    <td class="{{ ($module->module->MHT_total - $module->total_MHT_realisées) < 0 ? 'positive' : 'negative' }}">
+                        {{ number_format((($module->module->MHT_total - $module->total_MHT_realisées) / $module->total_MHT_realisées) * 100, 2) }}%
+                    </td>
+                </tr>
             @endforeach
         </tbody>
     </table>
-
 </body>
 </html>

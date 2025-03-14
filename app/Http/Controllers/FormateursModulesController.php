@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class AvencementPController extends Controller
+class FormateursModulesController extends Controller
 {
     //
 }

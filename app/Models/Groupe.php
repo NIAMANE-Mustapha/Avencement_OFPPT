@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Groupe extends Model
 {
-    use HasFactory;
-
     protected $table = 'groupes';
 
     public function filiere()
@@ -16,8 +14,8 @@ class Groupe extends Model
         return $this->belongsTo(Filiere::class, 'filiere_id');
     }
 
-    public function avancementPresentiel()
+    public function groupesModules()
     {
-        return $this->hasMany(Avencement_presentiele::class, 'groupe_id');
+        return $this->hasMany(GroupesModule::class, 'groupe_id');
     }
 }
