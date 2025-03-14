@@ -4,21 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class GroupesModule extends Model
+class FiliereModule extends Model
 {
-    protected $table = 'groupes_modules';
+    protected $table = 'filieres_modules';
     public $timestamps = true;
 
     protected $fillable = [
-        'groupe_id',
+        'filiere_id',
         'module_id',
-        'MHT_presentiel_realisées',
-        'MHT_sync_realisées',
     ];
 
-    public function groupe()
+    public function filiere()
     {
-        return $this->belongsTo(Groupe::class, 'groupe_id');
+        return $this->belongsTo(Filiere::class, 'filiere_id');
     }
 
     public function module()
