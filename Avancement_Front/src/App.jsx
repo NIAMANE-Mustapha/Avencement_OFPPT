@@ -1,12 +1,13 @@
-import AvencementParModule from "./Components/AvencementParModule"
+import DataUpload from "./Components/DataUpload"
+import Router from "./Router"
 
 function App() {
 
 
   return (
-    <>
-      <AvencementParModule/>
-    </>
+
+      <Router/>
+    
   )
 }
 

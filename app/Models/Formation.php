@@ -15,6 +15,7 @@ class Formation extends Model
         'type_formation',
         'mode_formation',
         'creneau',
+        'date_maj'
     ];
 
     public function filieres()

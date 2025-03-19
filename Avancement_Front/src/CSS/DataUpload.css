@@ -1,0 +1,50 @@
+
+.divlkbira{
+    justify-content: center;
+    font-family: Arial, sans-serif;
+}
+.filecontainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #05a459;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: #d6d6d6;
+    cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+    background-color: #05a459;
+}
+
+p {
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #28a745;
+}
+
+p.error {
+    color: #dc3545;
+}

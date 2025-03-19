@@ -154,8 +154,8 @@ h1 {
                         <td>{{ $module->groupe->filiere->formation->mode_formation }}</td>
                         <td>{{ $module->module->code_module }}</td>
                         <td>{{ $module->module->nom_module }}</td>
-                        <td>{{ $module->module->regional == 'N' ? '1' : '0' }}</td>
-                        <td>{{ $module->module->regional == 'O' ? '1' : '0' }}</td>
+                        <td>{{ $module->module->regional == 'N' ? 'Oui' : 'Non' }}</td>
+                        <td>{{ $module->module->regional == 'O' ? 'Oui' : 'Non' }}</td>
 
                     </tr>
                 @endforeach

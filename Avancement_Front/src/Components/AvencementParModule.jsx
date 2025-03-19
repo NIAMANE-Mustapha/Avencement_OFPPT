@@ -7,7 +7,7 @@ export default function AvencementParModule() {
     },[])
   return (
     <div className="container mt-5">
-            <h1>Avancement Par Module</h1>
+            <h2>Avancement Par Module</h2>
             <table className="table table-bordered">
                 <thead>
                     <tr>

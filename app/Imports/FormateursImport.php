@@ -17,15 +17,28 @@ class FormateursImport implements ToCollection, WithHeadingRow
 {
     public function collection(Collection $rows)
     {
-        DB::beginTransaction();
 
+        DB::beginTransaction();
         try {
+
+
+            DB::table('formateurs_modules')->delete();
+            DB::table('groupes_modules')->delete();
+            DB::table('filieres_modules')->delete();
+            DB::table('formateurs')->delete();
+            DB::table('modules')->delete();
+            DB::table('groupes')->delete();
+            DB::table('filieres')->delete();
+            DB::table('formations')->delete();
+
+
             foreach ($rows as $row) {
                 $formation = Formation::firstOrCreate([
                     'niveau_formation' => $row['niveau'] ?? null,
                     'type_formation' => $row['type_de_formation'] ?? null,
                     'creneau' => $row['creneau'] ?? null,
                     'mode_formation' => $row['mode'] ?? null,
+                    'date_maj' => isset($row['date_maj']) ? \Carbon\Carbon::createFromFormat('d/m/Y H:i:s', $row['date_maj'])->format('Y-m-d H:i:s') : null,
 
                 ]);
 

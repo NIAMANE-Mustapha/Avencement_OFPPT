@@ -12,14 +12,18 @@ class FormateurController extends Controller
     {
         return view('adddata');
     }
-    public function import(Request $request)
-    {
-        // Validate incoming request data
-        $request->validate([
-            'file' => 'required|max:2048',
-        ]);
+   public function import(Request $request)
+{
+    $request->validate([
+        'file' => 'required|max:2048',
+    ]);
 
-        Excel::import(new FormateursImport, $request->file('file'));
-        return back()->with('success', 'Formateurs imported successfully.');
-    }
+    Excel::import(new FormateursImport, $request->file('file'));
+
+    return response()->json([
+        'message' => 'Formateurs imported successfully'
+    ])->header('Access-Control-Allow-Origin', '*')
+      ->header('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, DELETE')
+      ->header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With');
+}
 }
