@@ -13,12 +13,12 @@ class Filiere extends Model
         'code_filiere',
         'nom_filiere',
         'secteur',
-        'foramtion_id',
+        'formation_id',
     ];
 
     public function formation()
     {
-        return $this->belongsTo(Formation::class, 'foramtion_id');
+        return $this->belongsTo(Formation::class, 'formation_id');
     }
 
     public function groupes()

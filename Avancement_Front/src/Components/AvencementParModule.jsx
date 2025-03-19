@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-
+import '../CSS/AvancementModule.CSS'
 export default function AvencementParModule() {
     const [moduleData,setModuleData]=useState([])
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/api/AvancementParModule").then(data=>setModuleData(data))
+        fetch("http://127.0.0.1:8000/api/AvancementParModule").then(res=>res.json()).then(data=>setModuleData(data))
     },[])
   return (
     <div className="container mt-5">
@@ -29,7 +29,8 @@ export default function AvencementParModule() {
                     </tr>
                 </thead>
                 <tbody>
-                    {moduleData.map((module) => (
+                    {console.log(moduleData)}
+                    {moduleData ?.map((module) => (
                         <tr key={module.id}>
                             <td>{module.groupe.filiere.formation.niveau_formation}</td>
                             <td>{module.groupe.filiere.secteur}</td>

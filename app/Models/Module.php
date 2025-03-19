@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Module extends Model
 {
-    protected $table = 'modules';
-    public $timestamps = true;
+    use HasFactory;
 
     protected $fillable = [
         'code_module',
@@ -21,13 +21,13 @@ class Module extends Model
         'MHT_sync_s1',
         'MHT_presentiel_s2',
         'MHT_sync_s2',
-        'prof_presentiel_id',
+        'formateur_presentiel_id',
         'formateur_sync_id',
     ];
 
-    public function profPresentiel()
+    public function formateurPresentiel()
     {
-        return $this->belongsTo(Formateur::class, 'prof_presentiel_id');
+        return $this->belongsTo(Formateur::class, 'formateur_presentiel_id');
     }
 
     public function formateurSync()
@@ -37,7 +37,13 @@ class Module extends Model
 
     public function groupes()
     {
-        return $this->belongsToMany(Groupe::class, 'groupes_modules', 'module_id', 'groupe_id')
-            ->withPivot('MHT_presentiel_realisées', 'MHT_sync_realisées');
+        return $this->belongsToMany(Groupe::class, 'groupes_modules')
+            ->withPivot('MHT_presentiel_realisées', 'MHT_sync_realisées')
+            ->withTimestamps();
+    }
+
+    public function filieres()
+    {
+        return $this->belongsToMany(Filiere::class, 'filieres_modules');
     }
 }

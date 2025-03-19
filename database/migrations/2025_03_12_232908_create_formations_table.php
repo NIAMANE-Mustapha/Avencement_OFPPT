@@ -6,22 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
-    public function up(): void
+    public function up()
     {
         Schema::create('formations', function (Blueprint $table) {
             $table->id();
-            $table->enum('niveau_formation', ['TS', 'FQ', 'BP']);
-            $table->enum('type_formation', ['diplômante', 'qualifiante', 'PP']);
-            $table->enum('mode_formation', ['résidentiel', 'alternatif'])->default('résidentiel'); 
-            $table->enum('creneau', ['CDJ', 'CDS']);
-            $table->integer('nombre_annees');
+            $table->string('niveau_formation')->nullable();
+            $table->string('type_formation')->nullable();
+            $table->string('mode_formation')->nullable();
+            $table->string('creneau')->nullable();
+            $table->dateTime("date_maj")->nullable();
             $table->timestamps();
         });
     }
-    public function down(): void
+
+    public function down()
     {
         Schema::dropIfExists('formations');
     }
-
 };
+

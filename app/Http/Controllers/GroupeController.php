@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupesModule;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as FacadesDB;
@@ -44,5 +46,20 @@ class GroupeController extends Controller
             ->get();
 
         return view('AvancementParGroupe',['formation'=>$results]);
+    }
+    public function showEfmDetails()
+    {
+        $groupes = GroupesModule::with([
+            'groupe.filiere',
+            'module'
+        ])
+        ->select(
+            'groupe_id',
+            'module_id',)
+        ->groupBy('groupe_id', 'module_id')
+        ->get();
+
+    //return $modules;
+    return view('NombreEfmParGroup',['groupes'=>$groupes]);
     }
 }

@@ -6,30 +6,25 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('formateurs_modules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('formateur_id');
-            $table->foreign('formateur_id')->references('id')->on('formateurs')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('groupe_id');
-            $table->foreign('groupe_id')->references('id')->on('groupes')->onUpdate('cascade')->onDelete('cascade');
-            $table->unsignedBigInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('modules')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('type_enseignement',['Présentiel','Distance']);
-            $table->decimal('heures_assignees', 5, 2)->default(0);
-            $table->decimal('heures_realisees', 5, 2)->default(0);
+            $table->foreignId('formateur_presentiel_id')->nullable()->constrained('formateurs')->onDelete('set null');
+            $table->foreignId('formateur_sync_id')->nullable()->constrained('formateurs')->onDelete('set null');
+            $table->foreignId('groupe_id')->constrained()->onDelete('cascade');
+            $table->foreignId('module_id')->constrained()->onDelete('cascade');
+            $table->float('mh_realisee_presentiel')->default(0.00);
+            $table->float('mh_realisee_sync')->default(0.00);
+            $table->float('mh_affectee_presentiel')->default(0.00);
+            $table->float('mh_affectee_sync')->default(0.00);
             $table->timestamps();
+            $table->unique(['groupe_id', 'module_id']);
+
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('formateurs_modules');
     }

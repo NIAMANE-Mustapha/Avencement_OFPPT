@@ -6,28 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('filieres_modules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('filiere_id');
-            $table->unsignedBigInteger('module_id');
+            $table->foreignId('filiere_id')->constrained()->onDelete('cascade');
+            $table->foreignId('module_id')->constrained()->onDelete('cascade');
             $table->timestamps();
-
-            // Clés étrangères
-            $table->foreign('filiere_id')->references('id')->on('filieres')->onDelete('cascade');
-            $table->foreign('module_id')->references('id')->on('modules')->onDelete('cascade');
-        
+            $table->unique(['filiere_id', 'module_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('filieres_modules');
     }

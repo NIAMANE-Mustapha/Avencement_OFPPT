@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,20 +21,20 @@ nav {
 
 nav a {
     background-color: white;
-    color: #4D55CCw;
+    color: #872341;
     text-decoration: none;
     font-size: 16px;
     font-weight: bold;
     padding: 12px 20px;
     border-radius: 8px;
-    border: 2px solid #4D55CC;
+    border: 2px solid #872341;
     transition: all 0.3s ease-in-out;
 }
 
 nav a:hover {
-    background-color: #4D55CC;
+    background-color: #872341;
     color: white;
-    border-color: #4D55CC;
+    border-color: #872341;
     transform: scale(1.05);
 }
 
@@ -49,88 +50,64 @@ nav a:hover {
     }
 }
 
-
 h1 {
     text-align: center;
-    color: #4D55CC;
+    color: #872341;
     font-size: 28px;
     margin-bottom: 20px;
     text-transform: uppercase;
 }
 
-.container {
-    margin: 0 auto;
-    padding: 10px;
-}
 
-table {
+.table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
+    background-color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
 
 }
 
-th, td {
-    padding: 6px 6px;
-    border-bottom: 1px solid #ddd;text-align: center;
 
-}
-
-th {
-    background-color: #4D55CC;
+.table thead {
+    background-color: #872341;
     color: white;
+}
+
+.table th {
+    padding: 7px;
+    text-align: left;
     font-weight: bold;
-    font-size: 0.9rem;
 }
 
-td {
-    background-color: #ffffff;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.85rem;
+.table td {
+    padding: 6px;
+    border-bottom: 1px solid #ddd;text-align: center;
 }
 
-tr:nth-child(even) td {
-    background-color: #f2f2f2;
+
+.table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-tr:hover {
-    background-color: #f1f1f1;
-}
 
-.table-bordered {
-    border: 1px solid #ddd;
-}
-
-.table-bordered th, .table-bordered td {
-    border: 1px solid #ddd;
-}
-
-.table th, .table td {
-    text-align: center;
+.table tbody tr:hover {
+    background-color: #e3f2fd;
+    transition: 0.3s;
 }
 
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    table {
-        font-size: 0.8rem;
-    }
-
-    th, td {
-        padding: 6px 8px;
+    .table {
+        font-size: 14px;
     }
 
     .table th, .table td {
-        text-align: center;
+        padding: 8px;
     }
 }
+
 </style>
 </head>
 <body>
@@ -141,7 +118,7 @@ tr:hover {
         <a href="{{ route('import.handle') }}">Importer depuis Excel</a>
     </nav>
     <div class="container">
-        <h1>Avancement Par Module</h1>
+        <h1>Nombre EFM par Groupes</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -157,16 +134,13 @@ tr:hover {
                     <th>Mode</th>
                     <th>Code Module</th>
                     <th>Module</th>
-                    <th>Régional</th>
-                    <th>MH Totale</th>
-                    <th>MH Réalisée</th>
-                    <th>% de Réalisation</th>
-                    <th>Ecart</th>
-                    <th>Ecart en % </th>
+                    <th>EFM Local</th>
+                    <th>EFM Régional</th>
+
                 </tr>
             </thead>
             <tbody>
-                @foreach ($modules as $module)
+                @foreach ($groupes as $module)
                     <tr>
                         <td>{{ $module->groupe->filiere->formation->niveau_formation }}</td>
                         <td>{{ $module->groupe->filiere->secteur }}</td>
@@ -180,12 +154,9 @@ tr:hover {
                         <td>{{ $module->groupe->filiere->formation->mode_formation }}</td>
                         <td>{{ $module->module->code_module }}</td>
                         <td>{{ $module->module->nom_module }}</td>
-                        <td>{{ $module->module->regional }}</td>
-                        <td>{{ $module->module->MHT_total }}</td>
-                        <td>{{ $module->total_MHT_realisées }}</td>
-                        <td>{{ number_format(($module->total_MHT_realisées / $module->module->MHT_total) * 100, 2) }}%</td>
-                        <td>{{ $module->module->MHT_total -$module->total_MHT_realisées }}</td>
-                        <td>{{ number_format((($module->module->MHT_total -$module->total_MHT_realisées)/$module->module->MHT_total)*100,2) }}%</td>
+                        <td>{{ $module->module->regional == 'N' ? '1' : '0' }}</td>
+                        <td>{{ $module->module->regional == 'O' ? '1' : '0' }}</td>
+
                     </tr>
                 @endforeach
             </tbody>

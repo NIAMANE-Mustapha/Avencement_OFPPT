@@ -6,24 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
-    public function up(): void
+    public function up()
     {
         Schema::create('groupes', function (Blueprint $table) {
             $table->id();
-            $table->string('nom_groupe');
-            $table->integer('effectif_groupe');
-            $table->string('annee_formation');
-            $table->unsignedBigInteger('filiere_id');
-            $table->foreign('filiere_id')->references('id')->on('filieres');
-            $table->timestamps();
+            $table->string('nom_groupe')->nullable();
+            $table->integer('effectif_groupe')->nullable();
+            $table->string('annee_formation')->nullable();
+            $table->foreignId('filiere_id')->nullable()->constrained()->onDelete('cascade');
+            $table->timestamps(); 
+            $table->unique(['nom_groupe', 'filiere_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('groupes');
     }

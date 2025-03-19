@@ -2,22 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Formateur extends Model
 {
-    protected $table = 'formateurs';
-    public $timestamps = true;
+    use HasFactory;
 
     protected $fillable = [
         'mle_formateur',
         'nom_formateur',
-        'prenom_formateur',
     ];
 
-    public function modules()
+    public function modulesPresentiel()
     {
-        return $this->belongsToMany(Module::class, 'formateurs_modules', 'formateur_id', 'module_id')
-            ->withPivot('groupe_id', 'type_enseignement', 'heures_assignees', 'heures_realisees');
+        return $this->hasMany(Module::class, 'formateur_presentiel_id');
+    }
+
+    public function modulesSync()
+    {
+        return $this->hasMany(Module::class, 'formateur_sync_id');
+    }
+
+    public function groupesModules()
+    {
+        return $this->belongsToMany(Groupe::class, 'formateurs_modules')
+            ->withPivot('module_id', 'type_enseignement', 'heures_assignees', 'heures_realisees')
+            ->withTimestamps();
     }
 }

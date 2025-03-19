@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Groupe extends Model
 {
-    protected $table = 'groupes';
-    public $timestamps = true;
+    use HasFactory;
 
     protected $fillable = [
         'nom_groupe',
@@ -18,12 +18,20 @@ class Groupe extends Model
 
     public function filiere()
     {
-        return $this->belongsTo(Filiere::class, 'filiere_id');
+        return $this->belongsTo(Filiere::class);
     }
 
     public function modules()
     {
-        return $this->belongsToMany(Module::class, 'groupes_modules', 'groupe_id', 'module_id')
-            ->withPivot('MHT_presentiel_realisées', 'MHT_sync_realisées');
+        return $this->belongsToMany(Module::class, 'groupes_modules')
+            ->withPivot('MHT_presentiel_realisées', 'MHT_sync_realisées')
+            ->withTimestamps();
+    }
+
+    public function formateurs()
+    {
+        return $this->belongsToMany(Formateur::class, 'formateurs_modules')
+            ->withPivot('module_id', 'type_enseignement', 'heures_assignees', 'heures_realisees')
+            ->withTimestamps();
     }
 }

@@ -10,15 +10,15 @@ class Formation extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id',
         'niveau_formation',
         'type_formation',
         'mode_formation',
         'creneau',
-        'nombre_annees',
     ];
 
     public function filieres()
     {
-        return $this->hasMany(Filiere::class, 'foramtion_id');
+        return $this->hasMany(Filiere::class, 'formation_id');
     }
 }
