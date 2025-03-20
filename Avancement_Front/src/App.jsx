@@ -1,14 +1,8 @@
-import DataUpload from "./Components/DataUpload"
-import Router from "./Router"
+import DataUpload from "./Components/DataUpload";
+import Router from "./Router";
 
 function App() {
-
-
-  return (
-
-      <Router/>
-    
-  )
+    return <Router />;
 }
 
-export default App
+export default App;

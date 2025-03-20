@@ -1,6 +1,6 @@
 .thecontainer{
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    margin: auto;
+    margin-left: 0 !important;
+
 }

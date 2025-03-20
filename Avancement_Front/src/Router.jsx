@@ -3,6 +3,8 @@ import NavBar from "./Components/NavBar";
 import AvencementParModule from "./Components/AvencementParModule";
 import DataUpload from "./Components/DataUpload";
 import './CSS/Layout.css'
+import AvancementParGroup from "./Components/AvancementParGroup";
+import NombreEfmParGroup from "./Components/NombreEfmParGroup";
 function Layout() {
   return (
     <div className="thecontainer" >
@@ -19,7 +21,9 @@ const router = createBrowserRouter([
     element: <Layout />, // Wrap pages with Layout
     children: [
       { path: "AvencementParModule", element: <AvencementParModule /> },
+      { path: "AvancementParGroup", element: <AvancementParGroup /> },
       { path: "DataUpload", element: <DataUpload /> },
+      { path: "NombreEfmParGroup", element: <NombreEfmParGroup /> },
     ],
   },
 ]);
